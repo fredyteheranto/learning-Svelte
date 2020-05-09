@@ -1,244 +1,113 @@
 <script>
-  let nombre = "Fredy Teheran";
-  let v1 = 0;
-  let v2 = 0;
-  let check = false;
+	import Header from './Design/Header.svelte'
+	import InputCustom from './Design/InputCustom.svelte'
+	import CardGrid from './Posts/CardGrid.svelte'
+	import Jumbotron from './Design/Jumbotron.svelte'
+	
 
-  function alerta1() {
-    alert("alerta 1");
-  }
+	const color = "warning"
 
-  const alerta2 = () => alert("alerta 2");
+	let titulo = ''
+	let descripcion = ''
+	let imagen = ''
+	
+	let show = false
 
-  let contador = 0;
-  let texto = "";
-  $: resultado = contador * 10;
-  $: if (resultado === 30) {
-    texto = "OK";
-  } else {
-    texto = "Ooouch";
-  }
+	let post = [
+		{
+			id:'1',
+			titulo:'Trabajando con svelte',
+			descripcion:'Realizando el curso de svelte temprano por la mañana',
+			imagen:'https://cdn.pixabay.com/photo/2019/09/03/04/35/macaw-4448598_960_720.jpg'
+		},
+		{
+			id:'2',
+			titulo:'Trabajando con vue',
+			descripcion:'Realizando el curso de svelte temprano por la tarde',
+			imagen:'https://cdn.pixabay.com/photo/2017/07/08/17/44/daisies-2485064_960_720.jpg'
+		},
+		{
+			id:'3',
+			titulo:'Trabajando con Angular',
+			descripcion:'Realizando el curso de svelte temprano por la noche',
+			imagen:'https://cdn.pixabay.com/photo/2019/10/18/17/35/flowers-4559785_960_720.jpg'
+		}
 
-  let login = true;
-  const cambio = () => (login = !login);
+	]
 
-  let nombres = ["Maria", "Sandra", "Ruben"];
+	function agregarPost(){
+		const nuevoPost = {
+			id: Math.random().toString(),
+			titulo:titulo,
+			descripcion:descripcion,
+			imagen:imagen
+		}
 
-  let personas = [
-    {
-      id: 1,
-      nombre: "Devan",
-      apellido: "Mordey",
-      email: "dmordey0@google.com.br"
-    },
-    { id: 2, nombre: "Tobi", apellido: "Knudsen", email: "tknudsen1@cbc.ca" },
-    {
-      id: 3,
-      nombre: "Thia",
-      apellido: "Rosengarten",
-      email: "trosengarten2@posterous.com"
-    },
-    {
-      id: 4,
-      nombre: "Willy",
-      apellido: "Sterling",
-      email: "wsterling3@blogspot.com"
-    },
-    {
-      id: 5,
-      nombre: "Wes",
-      apellido: "Chaffin",
-      email: "wchaffin4@myspace.com"
-    },
-    {
-      id: 6,
-      nombre: "Martyn",
-      apellido: "Nicholson",
-      email: "mnicholson5@dmoz.org"
-    },
-    {
-      id: 7,
-      nombre: "Lannie",
-      apellido: "Gallatly",
-      email: "lgallatly6@senate.gov"
-    },
-    {
-      id: 8,
-      nombre: "Mirella",
-      apellido: "De Ruel",
-      email: "mderuel7@facebook.com"
-    },
-    {
-      id: 9,
-      nombre: "Sunny",
-      apellido: "Stening",
-      email: "sstening8@odnoklassniki.ru"
-    },
-    {
-      id: 10,
-      nombre: "Newton",
-      apellido: "Hatchman",
-      email: "nhatchman9@ebay.co.uk"
-    },
-    { id: 11, nombre: "Karalee", apellido: "Ogle", email: "koglea@ted.com" },
-    {
-      id: 12,
-      nombre: "Tobye",
-      apellido: "Hefner",
-      email: "thefnerb@goo.ne.jp"
-    },
-    { id: 13, nombre: "Krissie", apellido: "Pimm", email: "kpimmc@jugem.jp" },
-    {
-      id: 14,
-      nombre: "Hadley",
-      apellido: "Bouller",
-      email: "hboullerd@elpais.com"
-    },
-    {
-      id: 15,
-      nombre: "Elizabet",
-      apellido: "Shevlan",
-      email: "eshevlane@wufoo.com"
-    },
-    {
-      id: 16,
-      nombre: "Gris",
-      apellido: "Karpenko",
-      email: "gkarpenkof@buzzfeed.com"
-    },
-    {
-      id: 17,
-      nombre: "Ermina",
-      apellido: "Morecombe",
-      email: "emorecombeg@dagondesign.com"
-    },
-    {
-      id: 18,
-      nombre: "Florrie",
-      apellido: "Roylance",
-      email: "froylanceh@yahoo.co.jp"
-    },
-    {
-      id: 19,
-      nombre: "Jessi",
-      apellido: "Scarrisbrick",
-      email: "jscarrisbricki@rambler.ru"
-    },
-    {
-      id: 20,
-      nombre: "Lura",
-      apellido: "Questier",
-      email: "lquestierj@howstuffworks.com"
-    }
-  ];
-
-  function sleep(s) {
-    return new Promise(res => setTimeout(res, s));
-  }
-
-  let promesa = ajax();
-  let users = [];
-  const url = "https://jsonplaceholder.typicode.com/users";
-
-  async function ajax() {
-    const res = await fetch(url);
-    users = await res.json();
-    await sleep(3000);
-    if (res.ok) {
-      return users;
-    } else {
-      throw new Error("Error al conectar con la api");
-    }
-  }
+		post = [nuevoPost, ...post]
+	}
 </script>
 
-<style>
-  main {
-    text-align: center;
-    padding: 1em;
-    max-width: 240px;
-    margin: 0 auto;
-  }
+<Header titulo="Componentes" {color}  />
 
-  h1 {
-    color: #ff3e00;
-    text-transform: uppercase;
-    font-size: 4em;
-    font-weight: 100;
-  }
+<div class="container" >
 
-  @media (min-width: 640px) {
-    main {
-      max-width: none;
-    }
-  }
-</style>
+Mostrar jumbotron <input type="checkbox" bind:checked={show}>
 
-<main>
-  <h1>DATABINGING</h1>
-  <h2>{nombre}</h2>
-  <input type="text" bind:value={nombre} />
-  <hr />
-  Valor 1
-  <input type="range" bind:value={v1} />
-  Valor 2
-  <input type="range" bind:value={v2} />
-  <p>{v1} + {v2} = {v1 + v2}</p>
-  <hr />
-  Habilitar botón
-  <input type="checkbox" bind:checked={check} />
-  <button disabled={!check}>Guardar</button>
-  <h1>ONCLICK</h1>
-  <button on:click={alerta1}>Alerta 1</button>
-  <button on:click={alerta2}>Alerta 2</button>
-  <button on:click={() => alert('alerta 3')}>Alerta 3</button>
-  <hr />
-  <h1>VARIABLES REACTIVAS</h1>
-  <button on:click={() => (contador += 1)}>Contador</button>
-  <p>Contador: {contador}, Resultado x 10 {resultado}</p>
-  <p>{texto}</p>
-  <hr />
-  <h1>BLOQUE IF</h1>
-  {#if login}
-    <h2>Estas logeado</h2>
-  {:else}
-    <h2>Iniciar sesión</h2>
-  {/if}
-  <button on:click={cambio}>Login</button>
+{#if show}
+	<Jumbotron nombre="Mis Componentes" let:mostrar={mostrar}>
+	<span slot="subtitulo">
+		Curso de svelte
+	</span>
+	<span slot="parrafo">
+		Contenido del curso en un parrafo
+	</span>
+	<div class:mostrar>
+		{#if mostrar}
+			<hr>
+			<button class="btn btn-danger" >Boton</button>
+		{:else}
+			<h2>Coloca el mouse encima</h2>
+		{/if}
+	</div>
+</Jumbotron>
+{/if}
 
-  <hr />
-  <h1>BLOQUE EACH</h1>
-  <ul>
-    {#each nombres as nombre, i}
-      <li>{i + 1} {nombre}</li>
-    {/each}
-  </ul>
-  <hr />
-  <table align="center">
-    <th>Nombre</th>
-    <th>Apellido</th>
-    <th>Email</th>
-    {#each personas as item}
-      <tr>
-        <td>{item.nombre}</td>
-        <td>{item.apellido}</td>
-        <td>{item.email}</td>
-      </tr>
-    {:else}
-      <tr>
-        <td colspan="3">La api no tiene datos</td>
-      </tr>
-    {/each}
-  </table>
-  <hr />
-  <h1>BLOQUE AWAIT</h1>
-  {#await promesa}
-    <p>Cargando api...</p>
-  {:then usuarios}
-    {#each usuarios as item}
-      <li>{item.name}</li>
-    {/each}
-  {:catch error}
-    <p style="color:red;">{error}</p>
-  {/await}
-</main>
+<CardGrid {post} />
+
+<form on:submit|preventDefault={agregarPost}>
+	<!-- <input type="text" placeholder="Titulo" bind:value={titulo} >
+	<input type="text" placeholder="Descripcion" bind:value={descripcion} >
+	<input type="text" placeholder="imagen" bind:value={imagen} >
+	<button type="submit" class="btn btn-info" >Guardar</button> -->
+
+	<InputCustom 
+		type="text"
+		nombre="Titulo"
+		id="titulo"
+		placeholder="Titulo"
+		value={titulo}
+		on:input={event => (titulo = event.target.value) }
+	/>
+
+	<InputCustom 
+		type="text"
+		nombre="Imagen"
+		id="imagen"
+		placeholder="Imagen"
+		value={imagen}
+		on:input={event => (imagen = event.target.value) }
+	/>
+
+	<InputCustom 
+		control="textarea"
+		nombre="Descripcion"
+		id="descripcion"
+		placeholder="Descripcion"
+		value={descripcion}
+		on:input={event => (descripcion = event.target.value) }
+	/>
+	<button type="submit" class="btn btn-info" >Guardar</button>
+</form>
+
+</div>
+
